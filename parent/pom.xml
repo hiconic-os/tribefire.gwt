@@ -23,7 +23,7 @@ You should have received a copy of the GNU Lesser General Public License along w
         <V.tribefire.extension.js>[3.0,3.1)</V.tribefire.extension.js>
         <gwt-compatible>true</gwt-compatible>
         <V.com.braintribe.testing>[1.0,1.1)</V.com.braintribe.testing>
-        <V.javax.servlet>3.0.1</V.javax.servlet>
+        <V.javax.servlet>3.1.0</V.javax.servlet>
         <V.com.braintribe.xml>[1.0,1.1)</V.com.braintribe.xml>
         <V.org.apache.velocity>2.1</V.org.apache.velocity>
         <V.com.google.gwt>2.8.0</V.com.google.gwt>
