@@ -46,7 +46,7 @@ You should have received a copy of the GNU Lesser General Public License along w
         <dependency><groupId>com.braintribe.gm</groupId><artifactId>ui-component-model</artifactId><version>${V.com.braintribe.gm}</version><?tag js?></dependency>
         <dependency><groupId>com.braintribe.gm</groupId><artifactId>ui-service-model</artifactId><version>${V.com.braintribe.gm}</version><?tag js?></dependency>
         <dependency><groupId>com.braintribe.gm</groupId><artifactId>legacy-workbench-model</artifactId><version>${V.com.braintribe.gm}</version><?tag js?></dependency>
-        <dependency><groupId>tribefire.extension.js</groupId><artifactId>js-ux-deployment-model</artifactId><version>${V.tribefire.extension.js}</version><?tag js?></dependency>
+        <dependency><groupId>tribefire.cortex</groupId><artifactId>js-ux-deployment-model</artifactId><version>${V.tribefire.cortex}</version><?tag js?></dependency>
         <dependency><groupId>tribefire.js</groupId><artifactId>basic-gwt-codecs</artifactId><version>${V.tribefire.js}</version></dependency>
         <dependency><groupId>tribefire.js</groupId><artifactId>file-api-module</artifactId><version>${V.tribefire.js}</version></dependency>
         <dependency><groupId>tribefire.js</groupId><artifactId>generic-model-module</artifactId><version>${V.tribefire.js}</version><?tag js?></dependency>

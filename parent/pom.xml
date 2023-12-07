@@ -20,7 +20,6 @@ You should have received a copy of the GNU Lesser General Public License along w
         <V.com.braintribe.common>[2.0,2.1)</V.com.braintribe.common>
         <V.com.braintribe.gm>[2.0,2.1)</V.com.braintribe.gm>
         <V.tribefire.cortex>[3.0,3.1)</V.tribefire.cortex>
-        <V.tribefire.extension.js>[3.0,3.1)</V.tribefire.extension.js>
         <gwt-compatible>true</gwt-compatible>
         <V.com.braintribe.testing>[1.0,1.1)</V.com.braintribe.testing>
         <V.javax.servlet>3.1.0</V.javax.servlet>
