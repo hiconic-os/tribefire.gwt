@@ -62,7 +62,7 @@ import com.braintribe.model.generic.path.MapValuePathElement;
 import com.braintribe.model.generic.path.ModelPath;
 import com.braintribe.model.generic.path.ModelPathElement;
 import com.braintribe.model.generic.path.RootPathElement;
-import com.braintribe.model.generic.reflection.CollectionType;
+import com.braintribe.model.generic.reflection.EssentialCollectionTypes;
 import com.braintribe.model.generic.reflection.GenericModelType;
 import com.braintribe.model.processing.session.api.persistence.PersistenceGmSession;
 import com.google.gwt.core.client.Scheduler;
@@ -171,7 +171,7 @@ public class ClipboardConstellation extends BorderLayoutContainer implements GmL
 				masterDetailConstellation.resetActions();
 			
 			ModelPath modelPath = new ModelPath();
-			modelPath.add(new RootPathElement(CollectionType.TYPE_LIST, listContent));
+			modelPath.add(new RootPathElement(EssentialCollectionTypes.TYPE_LIST, listContent));
 			masterDetailConstellation.setContent(null);
 			masterDetailConstellation.addContent(modelPath);
 		}
@@ -233,7 +233,7 @@ public class ClipboardConstellation extends BorderLayoutContainer implements GmL
 		if (masterDetailConstellation != null) {
 			List<Object> listContent = new ArrayList<>();
 			ModelPath modelPath = new ModelPath();
-			modelPath.add(new RootPathElement(CollectionType.TYPE_LIST, listContent));
+			modelPath.add(new RootPathElement(EssentialCollectionTypes.TYPE_LIST, listContent));
 			masterDetailConstellation.setContent(null);
 			masterDetailConstellation.addContent(modelPath);
 			masterDetailConstellation.select(0, false);

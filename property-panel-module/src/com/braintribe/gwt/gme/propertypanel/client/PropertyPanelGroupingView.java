@@ -54,10 +54,10 @@ import com.braintribe.model.generic.GenericEntity;
 import com.braintribe.model.generic.path.ModelPath;
 import com.braintribe.model.generic.path.PropertyPathElement;
 import com.braintribe.model.generic.path.RootPathElement;
-import com.braintribe.model.generic.reflection.BooleanType;
 import com.braintribe.model.generic.reflection.EntityType;
 import com.braintribe.model.generic.reflection.GenericModelType;
 import com.braintribe.model.generic.reflection.Property;
+import com.braintribe.model.generic.reflection.SimpleTypes;
 import com.braintribe.model.meta.GmProperty;
 import com.braintribe.model.meta.data.display.Icon;
 import com.braintribe.model.meta.data.prompt.EditAsHtml;
@@ -340,7 +340,7 @@ public class PropertyPanelGroupingView extends GroupingView<PropertyModel> {
 		if (property != null && "initializer".equals(property.getName()) && propertyModel.getParentEntity() instanceof GmProperty
 				&& ((GmProperty) propertyModel.getParentEntity()).getType() != null
 				&& ((GmProperty) propertyModel.getParentEntity()).getType().getTypeSignature().equalsIgnoreCase("boolean")) {
-			propertyType = BooleanType.TYPE_BOOLEAN;
+			propertyType = SimpleTypes.TYPE_BOOLEAN;
 		}
 		
 		if (property == null || propertyType.getJavaType() != Boolean.class) {

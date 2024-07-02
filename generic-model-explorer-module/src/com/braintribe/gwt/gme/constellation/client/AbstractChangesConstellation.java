@@ -65,7 +65,7 @@ import com.braintribe.model.generic.manipulation.LocalEntityProperty;
 import com.braintribe.model.generic.manipulation.Manipulation;
 import com.braintribe.model.generic.path.ModelPath;
 import com.braintribe.model.generic.path.RootPathElement;
-import com.braintribe.model.generic.reflection.CollectionType;
+import com.braintribe.model.generic.reflection.EssentialCollectionTypes;
 import com.braintribe.model.generic.reflection.GenericModelType;
 import com.braintribe.model.generic.tracking.ManipulationListener;
 import com.braintribe.model.processing.session.api.persistence.CommitListener;
@@ -461,7 +461,7 @@ public abstract class AbstractChangesConstellation extends BorderLayoutContainer
 		List<Object> listContent = new ArrayList<>(entitiesSet);
 		listContent.addAll(transientEntitiesSet);
 		ModelPath modelPath = new ModelPath();
-		modelPath.add(new RootPathElement(CollectionType.TYPE_LIST, listContent));
+		modelPath.add(new RootPathElement(EssentialCollectionTypes.TYPE_LIST, listContent));
 		masterDetailConstellation.setContent(null);
 		masterDetailConstellation.addContent(modelPath);
 	}

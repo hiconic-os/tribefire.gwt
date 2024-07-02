@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import com.braintribe.gwt.genericmodel.client.codec.dom4.GmXmlCodec;
@@ -72,8 +71,6 @@ import jsinterop.annotations.JsType;
 @JsType(namespace = InteropConstants.JS_UTIL_NAMESPACE)
 @SuppressWarnings("unusable-by-js")
 public class JsUtil {
-	
-	private static Map<PreliminaryEntityReference, GenericEntity> instantiations;
 	
 	@JsConstructor
 	public JsUtil() {
@@ -349,16 +346,7 @@ public class JsUtil {
 		
 		CompoundManipulation compound = CompoundManipulation.create(manipulations);
 		NestedTransaction nestedTransaction = gmSession.getTransaction().beginNestedTransaction();
-		ManipulationReport report = gmSession.manipulate().mode(ManipulationMode.REMOTE).lenience(ManipulationLenience.manifestOnUnknownEntity)
-				.instantiations(instantiations).apply(compound);
-		
-		Map<PreliminaryEntityReference, GenericEntity> map = report.getInstantiations();
-		if (map != null) {
-			if (instantiations == null)
-				instantiations = map;
-			else
-				instantiations.putAll(instantiations);
-		}
+		ManipulationReport report = gmSession.manipulate().mode(ManipulationMode.REMOTE).lenience(ManipulationLenience.manifestOnUnknownEntity).apply(compound);
 		
 		nestedTransaction.commit();
 		List<PreliminaryEntityReference> instantiatedReferencesList = new ArrayList<>();
