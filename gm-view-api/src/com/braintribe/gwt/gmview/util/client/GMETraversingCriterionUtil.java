@@ -15,19 +15,13 @@
 // ============================================================================
 package com.braintribe.gwt.gmview.util.client;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
 
 import com.braintribe.gwt.logging.client.Logger;
-import com.braintribe.model.generic.pr.criteria.PatternCriterion;
-import com.braintribe.model.generic.pr.criteria.PropertyTypeCriterion;
 import com.braintribe.model.generic.pr.criteria.TraversingCriterion;
-import com.braintribe.model.generic.pr.criteria.typematch.CollectionTypeMatch;
-import com.braintribe.model.generic.pr.criteria.typematch.EntityTypeMatch;
-import com.braintribe.model.generic.pr.criteria.typematch.TypeMatch;
 import com.braintribe.model.generic.processing.pr.fluent.TC;
 import com.braintribe.model.meta.data.prompt.AutoExpand;
+import com.braintribe.model.processing.query.tools.PreparedTcs;
 import com.braintribe.model.processing.session.api.persistence.PersistenceGmSession;
 import com.braintribe.model.template.Template;
 import com.sencha.gxt.core.shared.FastMap;
@@ -143,17 +137,11 @@ public class GMETraversingCriterionUtil {
 	}
 
 	private static TraversingCriterion getReachableTC() {
-		TraversingCriterion bean = TC.create().negation().joker().done();
-		return bean;
+		return PreparedTcs.everythingTc;
 	}
 
 	private static TraversingCriterion getShallowTC() {
-		PropertyTypeCriterion ptc = PropertyTypeCriterion.T.create();
-		ptc.setTypes(new HashSet<TypeMatch>(Arrays.asList(EntityTypeMatch.T.create(), CollectionTypeMatch.T.create())));
-		
-		PatternCriterion bean = PatternCriterion.T.create();
-		bean.setCriteria(Arrays.asList(com.braintribe.model.generic.pr.criteria.EntityCriterion.T.create(), ptc));
-		return bean;
+		return PreparedTcs.scalarOnlyTc;
 	}
 	
 }
