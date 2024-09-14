@@ -453,7 +453,7 @@ public class ServiceRequestExecutionPanel extends BorderLayoutContainer
 			queryRequest = queryAndSelect;
 		}
 		
-		queryRequest.setServiceId(accessId);
+		queryRequest.setDomainId(accessId);
 		
 		return queryRequest;
 	}

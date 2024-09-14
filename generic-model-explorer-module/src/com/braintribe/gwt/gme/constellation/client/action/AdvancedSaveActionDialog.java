@@ -215,7 +215,7 @@ public class AdvancedSaveActionDialog extends ClosableWindow implements Initiali
 	
 	private void checkEnablement() {
 		GetCollaborativeStageStats getCollaborativeStageStats = GetCollaborativeStageStats.T.create();
-		getCollaborativeStageStats.setServiceId(accessId);
+		getCollaborativeStageStats.setDomainId(accessId);
 		getCollaborativeStageStats.setName(currentAssetName);
 		runServiceRequest(getCollaborativeStageStats);
 		if (isRendered())
@@ -227,7 +227,7 @@ public class AdvancedSaveActionDialog extends ClosableWindow implements Initiali
 			this.accessId = accessId;
 			
 			GetCollaborativeInitializers getInitializers = GetCollaborativeInitializers.T.create();
-			getInitializers.setServiceId(accessId);
+			getInitializers.setDomainId(accessId);
 			runServiceRequest(getInitializers);
 			if (this.isRendered())
 				mask(LocalizedText.INSTANCE.loadingPredecessorInfo());
