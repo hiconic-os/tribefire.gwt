@@ -1226,6 +1226,11 @@ public class ExplorerConstellation extends ExtendedBorderLayoutContainer impleme
 
 	@Override
 	public void onOpenModelPath(ModelPath modelPath, TabInformation tabInformation) {
+		onOpenModelPath(modelPath, tabInformation, false);
+	}
+
+	@Override
+	public void onOpenModelPath(ModelPath modelPath, TabInformation tabInformation, boolean useTransientSession) {
 		ModelPathElement last = modelPath.last();
 		if (last.getType().isEntity() || last instanceof PropertyRelatedModelPathElement) {
 			onOpenModelPath(modelPath);
@@ -1233,12 +1238,12 @@ public class ExplorerConstellation extends ExtendedBorderLayoutContainer impleme
 		}
 		
 		ValueDescriptionBean valueDescriptionBean = new ValueDescriptionBean(tabInformation.getTabName(), tabInformation.getTabDescription());
-		
 		maybeCreateVerticalTabElement(null, tabInformation.getTabName(), tabInformation.getTabDescription(),
-				provideBrowsingConstellation(valueDescriptionBean, modelPath, browsingConstellationProvider), tabInformation.getTabIcon(),
+				provideBrowsingConstellation(valueDescriptionBean, modelPath, null, null, browsingConstellationProvider, useTransientSession, false, false),
+				tabInformation.getTabIcon(),
 				last.getValue(), false);
 	}
-	
+
 	/**
 	 * Opens a new tab for the ServiceRequest by type within the {@link QuickAccessResult}.
 	 */

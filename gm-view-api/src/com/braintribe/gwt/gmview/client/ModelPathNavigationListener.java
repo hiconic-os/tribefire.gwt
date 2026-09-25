@@ -23,6 +23,10 @@ public interface ModelPathNavigationListener {
 	void onOpenModelPath(ModelPath modelPath);
 	
 	void onOpenModelPath(ModelPath modelPath, TabInformation tabInformation);
+
+	default void onOpenModelPath(ModelPath modelPath, TabInformation tabInformation, boolean useTransientSession) {
+		onOpenModelPath(modelPath, tabInformation);
+	}
 	
 	/**
 	 * Adds a modelPath.

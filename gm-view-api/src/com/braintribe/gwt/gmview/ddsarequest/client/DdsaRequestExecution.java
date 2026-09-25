@@ -199,7 +199,7 @@ public class DdsaRequestExecution {
 		if (handlingPaging)
 			navigationListener.onAddModelPath(modelPath);
 		else
-			navigationListener.onOpenModelPath(modelPath, tabInformation);
+			navigationListener.onOpenModelPath(modelPath, tabInformation, true);
 	}
 
 	/**
