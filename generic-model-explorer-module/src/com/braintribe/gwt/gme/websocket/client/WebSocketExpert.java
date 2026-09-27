@@ -107,13 +107,18 @@ public class WebSocketExpert implements DisposableBean, WebSocketSupport, ModelE
 		if (webSocketMap == null)
 			webSocketMap = new FastMap<>();
 		
-		if (webSocketMap.containsKey(clientId))
-			return;
+		WebSocket existingWebSocket = webSocketMap.get(clientId);
+		if (existingWebSocket != null) {
+			if (existingWebSocket.readyState != WebSocket.CLOSED)
+				return;
+
+			webSocketMap.remove(clientId);
+		}
 		
 		String webSocketUrl = webSocketUrlFunction.apply(clientId);
 		WebSocket webSocket = new WebSocket(webSocketUrl);
-		prepareWebSocket(webSocket, webSocketUrl);
 		webSocketMap.put(clientId, webSocket);
+		prepareWebSocket(webSocket, webSocketUrl, () -> removeNotificationChannelIfCurrent(clientId, webSocket));
 	}
 	
 	@Override
@@ -122,21 +127,26 @@ public class WebSocketExpert implements DisposableBean, WebSocketSupport, ModelE
 			return;
 		
 		WebSocket webSocket = webSocketMap.remove(clientId);
-		if (webSocket != null  && webSocket.readyState == WebSocket.OPEN)
+		if (webSocket != null && webSocket.readyState != WebSocket.CLOSING && webSocket.readyState != WebSocket.CLOSED)
 			webSocket.close();
+	}
+
+	private void removeNotificationChannelIfCurrent(String clientId, WebSocket webSocket) {
+		if (webSocketMap != null && webSocketMap.get(clientId) == webSocket)
+			webSocketMap.remove(clientId);
 	}
 
 	private void openWebSocket() {
 		try {
 			String webSocketUrl = webSocketUrlFunction.apply(null);
 			webSocket = new WebSocket(webSocketUrl);
-			prepareWebSocket(webSocket, webSocketUrl);
+			prepareWebSocket(webSocket, webSocketUrl, null);
 		} catch (Exception e) {
 			logger.error("Error with WebSocket connection: " + e.getMessage());
 		}						
 	}
 	
-	private void prepareWebSocket(WebSocket webSocket, String webSocketUrl) {
+	private void prepareWebSocket(WebSocket webSocket, String webSocketUrl, Runnable closedHandler) {
 		try {
 			webSocket.onopen = event -> logger.info("WebSocket connection established to: " + webSocketUrl);
 			
@@ -166,8 +176,16 @@ public class WebSocketExpert implements DisposableBean, WebSocketSupport, ModelE
 						}).onError(t -> GlobalState.showError("Error while decoding received message from services.", t));
 			};
 			
-			webSocket.onerror = error -> logger.error("Error with WebSocket connection to: " + webSocketUrl);
-			webSocket.onclose = closeEvent -> logger.info("Lost WebSocket connection to: " + webSocketUrl);
+			webSocket.onerror = error -> {
+				logger.error("Error with WebSocket connection to: " + webSocketUrl);
+				if (closedHandler != null && webSocket.readyState == WebSocket.CLOSED)
+					closedHandler.run();
+			};
+			webSocket.onclose = closeEvent -> {
+				logger.info("Lost WebSocket connection to: " + webSocketUrl);
+				if (closedHandler != null)
+					closedHandler.run();
+			};
 		} catch (Exception e) {
 			logger.error("Error with WebSocket connection: " + e.getMessage());
 		}
@@ -199,16 +217,19 @@ public class WebSocketExpert implements DisposableBean, WebSocketSupport, ModelE
 	}
 	
 	private void disconnect() {
-		if (webSocket == null)
-			return;
-		
 		connectionTimer.cancel();
 		
-		if (webSocket.readyState == WebSocket.OPEN)
+		if (webSocket != null && webSocket.readyState != WebSocket.CLOSING && webSocket.readyState != WebSocket.CLOSED)
 			webSocket.close();
+		webSocket = null;
 		
-		if (webSocketMap != null)
-			webSocketMap.values().stream().filter(ws -> ws.readyState == WebSocket.OPEN).forEach(ws -> ws.close());
+		if (webSocketMap != null) {
+			Map<String, WebSocket> notificationWebSockets = webSocketMap;
+			webSocketMap = null;
+			notificationWebSockets.values().stream() //
+					.filter(ws -> ws.readyState != WebSocket.CLOSING && ws.readyState != WebSocket.CLOSED) //
+					.forEach(WebSocket::close);
+		}
 	}
 
 }
