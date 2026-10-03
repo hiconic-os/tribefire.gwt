@@ -147,9 +147,7 @@ class Session {
 	private static Supplier<GwtSessionResourceSupport> accessoryResourceAccess = new SessionScopedBeanProvider<GwtSessionResourceSupport>() {
 		@Override
 		public GwtSessionResourceSupport create() throws Exception {
-			GwtSessionResourceSupport bean = publish(restBasedAbstractResourceAccess.get());
-			bean.setAccessoryAxis(true);
-			return bean;
+			return publish(restBasedAbstractResourceAccess.get());
 		}
 	};
 
